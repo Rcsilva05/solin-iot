@@ -14,6 +14,7 @@
 
 - Simulação no Wokwi: https://wokwi.com/projects/464927683816800257
 - Repositório: https://github.com/Rcsilva05/solin-iot
+- link youtube: https://youtu.be/Bghzqj5eCgQ
 
 ---
 
