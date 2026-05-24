@@ -10,11 +10,23 @@
 | Natália Cristina | 564099 |
 | Otávio Ferreira | 565960 |
 
+## Links do projeto
+
+- Simulação no Wokwi: https://wokwi.com/projects/464927683816800257
+- Repositório: https://github.com/Rcsilva05/solin-iot
+
 ---
 
 Sistema IoT que detecta quando o pet faz xixi (no tapete ou coleira) usando um
 sensor de umidade, aciona avisos locais (LED + buzzer) e envia os eventos pela
 internet via MQTT para um **dashboard web em tempo real**.
+
+## O problema que o projeto resolve
+
+Tutores nem sempre conseguem acompanhar a rotina urinária do pet, principalmente
+quando passam o dia fora. Mudanças nessa rotina (urinar demais, de menos, ou
+parar de urinar) podem indicar problemas de saúde. O SOLIN monitora isso
+automaticamente e avisa o tutor em tempo real.
 
 ## Arquitetura
 
@@ -62,32 +74,84 @@ Cada mensagem é um JSON, por exemplo:
 }
 ```
 
-## Como rodar o dashboard
+## Como rodar o projeto (passo a passo)
 
-Pré-requisito: ter o **Python** instalado (https://python.org — na instalação,
-marque a caixa "Add Python to PATH").
+### Pré-requisito
+Ter o **Python** instalado (https://python.org — na instalação, marque a caixa
+"Add Python to PATH").
 
-1. Abra o terminal (Prompt de Comando no Windows) dentro da pasta do projeto.
-2. Instale as dependências:
-   ```
-   pip install -r requirements.txt
-   ```
-3. Rode o dashboard:
-   ```
-   python dashboard.py
-   ```
-4. Abra no navegador: **http://localhost:5000**
+### 1. Iniciar o dashboard
+Abra o terminal (Prompt de Comando no Windows) dentro da pasta do projeto e rode:
 
-Enquanto isso, inicie a simulação no Wokwi. Ao mexer no sensor de umidade,
-os eventos vão aparecendo no dashboard automaticamente.
+```
+pip install -r requirements.txt
+python dashboard.py
+```
 
-link repositório: https://github.com/Rcsilva05/solin-iot
+Deixe essa janela aberta (ela precisa ficar rodando) e abra no navegador:
+**http://localhost:5000**
+
+> O dashboard começa zerado, mostrando "Aguardando coleira...". Isso é normal —
+> ele está esperando os dados chegarem.
+
+### 2. Enviar os dados (duas opções)
+
+**Opção A — pela simulação no Wokwi (a coleira "de verdade"):**
+1. Abra o link do Wokwi e clique no botão verde de play.
+2. Localize o sensor de umidade (rótulo "Umidade (urina)").
+3. Passe o mouse sobre o sensor e arraste a barrinha de controle para um valor
+   alto (acima de 2200 = xixi; acima de 2800 = alerta de excesso).
+4. Os eventos aparecem automaticamente no dashboard.
+
+**Opção B — pelo simulador em Python (para demonstração):**
+Com o `dashboard.py` rodando, abra uma SEGUNDA janela de terminal na pasta e rode:
+
+```
+python simular_xixi.py
+```
+
+Esse script "finge" ser a coleira e envia 3 xixis de teste (2 normais + 1 alerta).
+Os contadores do dashboard sobem ao vivo. É a forma mais simples de demonstrar.
+
+## Limites de detecção (definidos no firmware)
+
+| Faixa de umidade (0 a 4095) | Significado |
+|---|---|
+| abaixo de 1200 | seco — nada acontece |
+| acima de 2200 | xixi detectado (LED verde + 1 bipe) |
+| acima de 2800 | excesso (LED vermelho + 4 bipes + alerta) |
+
+Há um intervalo (debounce) de 8 segundos entre um evento e outro para evitar
+contagens repetidas da mesma urina.
+
+## Resolução de problemas
+
+**Cliquei no play no Wokwi mas nada aparece no dashboard.**
+- Verifique se o `dashboard.py` está rodando e se o navegador mostra "Coleira
+  conectada".
+- O evento "online" no histórico apenas indica que o ESP32 ligou; ele não conta
+  como xixi. Para os contadores subirem é preciso simular umidade (arrastar o
+  sensor no Wokwi, ou rodar o `simular_xixi.py`).
+- Respeite o intervalo de 8 segundos entre eventos.
+
+**O navegador mostra "Não é possível acessar esse site / conexão recusada".**
+- Significa que o `dashboard.py` não está mais rodando. Rode `python dashboard.py`
+  de novo e recarregue a página.
+
+**Os contadores voltaram a zero.**
+- Toda vez que o `dashboard.py` é reiniciado, a contagem recomeça do zero. Basta
+  enviar novos eventos para preenchê-la novamente.
+
+**O `http://localhost:5000` não abre no computador de outra pessoa.**
+- `localhost` se refere apenas ao computador onde o programa está rodando. Para
+  ver o dashboard, é preciso rodar o `dashboard.py` na própria máquina.
 
 ## Estrutura do projeto
 
 ```
 solin-dashboard/
 ├── dashboard.py          # servidor Python (MQTT + web)
+├── simular_xixi.py       # simulador da coleira (para demonstração)
 ├── requirements.txt      # dependências
 ├── templates/
 │   └── index.html        # página do dashboard
