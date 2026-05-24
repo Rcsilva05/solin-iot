@@ -81,6 +81,8 @@ marque a caixa "Add Python to PATH").
 Enquanto isso, inicie a simulação no Wokwi. Ao mexer no sensor de umidade,
 os eventos vão aparecendo no dashboard automaticamente.
 
+link repositório: https://github.com/Rcsilva05/solin-iot
+
 ## Estrutura do projeto
 
 ```
