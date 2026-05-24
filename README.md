@@ -81,15 +81,17 @@ Ter o **Python** instalado (https://python.org — na instalação, marque a cai
 "Add Python to PATH").
 
 ### 1. Iniciar o dashboard
-Abra o terminal (Prompt de Comando no Windows) dentro da pasta do projeto e rode:
+Abra a pasta do projeto, clique na barra de endereço lá em cima, digite `cmd` e
+dá Enter — isso abre o terminal já dentro da pasta certa. Aí roda esses dois
+comandos, um de cada vez:
 
 ```
 pip install -r requirements.txt
 python dashboard.py
 ```
 
-Deixe essa janela aberta (ela precisa ficar rodando) e abra no navegador:
-**http://localhost:5000**
+Depois é só deixar essa janela aberta (ela tem que ficar rodando) e abrir o
+navegador em **http://localhost:5000**.
 
 > O dashboard começa zerado, mostrando "Aguardando coleira...". Isso é normal —
 > ele está esperando os dados chegarem.
@@ -104,14 +106,20 @@ Deixe essa janela aberta (ela precisa ficar rodando) e abra no navegador:
 4. Os eventos aparecem automaticamente no dashboard.
 
 **Opção B — pelo simulador em Python (para demonstração):**
-Com o `dashboard.py` rodando, abra uma SEGUNDA janela de terminal na pasta e rode:
+Às vezes mexer no sensor dentro do Wokwi é meio chato, então criamos um
+programinha que faz o papel da coleira e manda os xixis automaticamente. É bem
+fácil: deixe o `dashboard.py` rodando na janela que já estava aberta, e abra uma
+SEGUNDA janela do terminal — mesmo processo de antes: entra na pasta do projeto,
+clica na barra de endereço, digita `cmd` e dá Enter. Aí, nessa janela nova, é só
+colar:
 
 ```
 python simular_xixi.py
 ```
 
-Esse script "finge" ser a coleira e envia 3 xixis de teste (2 normais + 1 alerta).
-Os contadores do dashboard sobem ao vivo. É a forma mais simples de demonstrar.
+Ele vai mandar 3 xixis de teste (2 normais e 1 de alerta), e você vê os números
+subindo na hora lá no dashboard. Se quiser mandar mais xixis depois, é só rodar
+esse mesmo comando de novo.
 
 ## Limites de detecção (definidos no firmware)
 
