@@ -44,7 +44,7 @@ automaticamente e avisa o tutor em tempo real.
 
 Circuito montado na simulação do Wokwi (ESP32 + sensor + LEDs + buzzer):
 
-![Circuito no Wokwi](imagens/estrutura-dashboard.png)
+![Circuito no Wokwi](simulador-imagens/estrutura-dashboard.png)
 
 ## Frameworks e ferramentas usados
 
@@ -100,7 +100,7 @@ navegador em **http://localhost:5000**.
 Quando o dashboard está rodando, o terminal mostra a conexão com o broker MQTT e
 as atualizações chegando:
 
-![Dashboard rodando no terminal](imagens/dashboard-resultados.png)
+![Dashboard rodando no terminal](simulador-imagens/dashboard-resultados.png)
 
 > O dashboard começa zerado, mostrando "Aguardando coleira...". Isso é normal —
 > ele está esperando os dados chegarem.
@@ -130,12 +130,12 @@ Ele vai mandar 3 xixis de teste (2 normais e 1 de alerta), e você vê os númer
 subindo na hora lá no dashboard. Se quiser mandar mais xixis depois, é só rodar
 esse mesmo comando de novo.
 
-![Simulador enviando os xixis](imagens/simulador.png)
+![Simulador enviando os xixis](simulador-imagens/simulador.png)
 
 E o resultado aparece no dashboard, com os contadores e o histórico de eventos
 atualizados em tempo real:
 
-![Dashboard com os eventos](imagens/eventos-dashboard.png)
+![Dashboard com os eventos](simulador-imagens/eventos-dashboard.png)
 
 ## Limites de detecção (definidos no firmware)
 
@@ -179,6 +179,7 @@ solin-dashboard/
 ├── requirements.txt      # dependências
 ├── templates/
 │   └── index.html        # página do dashboard
+├── simulador-imagens/    # prints do projeto usados no README
 ├── sketch.ino            # firmware do ESP32 (C++) — feito no Wokwi
 └── README.md             # este arquivo
 ```
